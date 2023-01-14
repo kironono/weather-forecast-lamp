@@ -4,6 +4,9 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/kironono/weather-forecast-lamp/internal/device"
+	"github.com/kironono/weather-forecast-lamp/internal/weather"
+	"github.com/nasa9084/go-switchbot"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -50,5 +53,23 @@ func initConfig() {
 
 func Run(args []string) error {
 	rootCmd.SetArgs(args)
+	rootCmd.RunE = execUpdateCommandF
 	return rootCmd.Execute()
+}
+
+func execUpdateCommandF(command *cobra.Command, args []string) error {
+	token := viper.GetString("switchbot_open_token")
+	secret := viper.GetString("switchbot_secret_key")
+	deviceId := viper.GetString("switchbot_device_id")
+	openWeatherAppId := viper.GetString("openweather_app_id")
+	city := viper.GetString("openweather_city")
+
+	sc := switchbot.New(token, secret)
+
+	cb := device.NewColorBulb(sc, deviceId)
+	pop, err := weather.GetProbabilityOfPrecipitation(openWeatherAppId, city)
+	if err != nil {
+		return fmt.Errorf("get pop: %w", err)
+	}
+	return cb.Update(pop)
 }

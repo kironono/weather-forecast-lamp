@@ -14,7 +14,7 @@ func ListDevices() {
 	secret := viper.GetString("switchbot_secret_key")
 
 	c := switchbot.New(token, secret)
-	pdev, _, _ := c.Device().List(context.Background())
+	pdev, vdev, _ := c.Device().List(context.Background())
 
 	headerFmt := color.New(color.FgGreen, color.Underline).SprintfFunc()
 	columnFmt := color.New(color.FgYellow).SprintfFunc()
@@ -23,6 +23,10 @@ func ListDevices() {
 	tbl.WithHeaderFormatter(headerFmt).WithFirstColumnFormatter(columnFmt)
 
 	for _, d := range pdev {
+		tbl.AddRow(d.ID, d.Type, d.Name)
+	}
+
+	for _, d := range vdev {
 		tbl.AddRow(d.ID, d.Type, d.Name)
 	}
 
