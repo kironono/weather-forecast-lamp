@@ -3,7 +3,7 @@ name: cron
 on:
   push:
   schedule:
-    - cron:  '0 */3 * * *'
+    - cron: '0 */3 * * *'
 
 jobs:
   execute:
@@ -21,12 +21,12 @@ jobs:
           go-version: "^1.18.5"
 
       - name: Run command
-        - shell: bash
-          env:
-            SWITCHBOT_OPEN_TOKEN: ${{ secrets.SWITCHBOT_OPEN_TOKEN }}
-            SWITCHBOT_SECRET_KEY: ${{ secrets.SWITCHBOT_SECRET_KEY }}
-            SWITCHBOT_DEVICE_ID: ${{ secrets.SWITCHBOT_DEVICE_ID }}
-            OPENWEATHER_APP_ID: ${{ secrets.OPENWEATHER_APP_ID }}
-            OPENWEATHER_CITY: ${{ secrets.OPENWEATHER_CITY }}
-          run: |
-            go run cmd/weather-forecast-lamp/main.go
+        shell: bash
+        env:
+          SWITCHBOT_OPEN_TOKEN: ${{ secrets.SWITCHBOT_OPEN_TOKEN }}
+          SWITCHBOT_SECRET_KEY: ${{ secrets.SWITCHBOT_SECRET_KEY }}
+          SWITCHBOT_DEVICE_ID: ${{ secrets.SWITCHBOT_DEVICE_ID }}
+          OPENWEATHER_APP_ID: ${{ secrets.OPENWEATHER_APP_ID }}
+          OPENWEATHER_CITY: ${{ secrets.OPENWEATHER_CITY }}
+        run: |
+          go run cmd/weather-forecast-lamp/main.go
