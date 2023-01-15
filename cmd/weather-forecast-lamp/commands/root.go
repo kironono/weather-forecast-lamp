@@ -22,11 +22,17 @@ var (
 func init() {
 	cobra.OnInitialize(initConfig)
 
-	rootCmd.PersistentFlags().StringP("switchbot-open-token", "", "", "Your SwitchBot open token.")
-	rootCmd.PersistentFlags().StringP("switchbot-secret-key", "", "", "Your SwitchBot secret key.")
+	rootCmd.PersistentFlags().StringP("switchbot-open-token", "", "", "Your SwitchBot open token")
+	rootCmd.PersistentFlags().StringP("switchbot-secret-key", "", "", "Your SwitchBot secret key")
+	rootCmd.PersistentFlags().StringP("switchbot-device-id", "", "", "Target control device ID")
+	rootCmd.PersistentFlags().StringP("openweather-app-id", "", "", "Your OpenWeatherMap app ID")
+	rootCmd.PersistentFlags().StringP("openweather-city", "", "", "OpenWeatherMap weather forecast city")
 
 	viper.BindPFlag("switchbot_open_token", rootCmd.PersistentFlags().Lookup("switchbot-open-token"))
 	viper.BindPFlag("switchbot_secret_key", rootCmd.PersistentFlags().Lookup("switchbot-secret-key"))
+	viper.BindPFlag("switchbot_device_id", rootCmd.PersistentFlags().Lookup("switchbot-device-id"))
+	viper.BindPFlag("openweather_app_id", rootCmd.PersistentFlags().Lookup("openweather-app-id"))
+	viper.BindPFlag("openweather_city", rootCmd.PersistentFlags().Lookup("openweather-city"))
 }
 
 func initConfig() {
