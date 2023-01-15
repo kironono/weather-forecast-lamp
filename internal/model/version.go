@@ -1,4 +1,7 @@
 package model
 
-var Version string
-var Revision string
+var (
+	// Populated by goreleaser.
+	Version  = "?"
+	Revision = "?"
+)
